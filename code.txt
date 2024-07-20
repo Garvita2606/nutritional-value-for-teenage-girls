@@ -1,0 +1,59 @@
+code G
+
+# Nutritional Value Tracker for Teenage Girls
+
+def calculate_bmi(weight, height):
+    """Calculate Body Mass Index (BMI)."""
+    return weight / (height ** 2)
+
+def calculate_caloric_needs(age, weight, height, activity_level):
+    """Calculate daily caloric needs based on age, weight, height, and activity level."""
+    # Basal Metabolic Rate (BMR) calculation for teenage girls
+    bmr = 655 + (9.6 * weight) + (1.8 * height * 100) - (4.7 * age)
+    # Adjust BMR based on activity level
+    activity_multipliers = {
+        'sedentary': 1.2,
+        'light': 1.375,
+        'moderate': 1.55,
+        'active': 1.725,
+        'very active': 1.9
+    }
+    return bmr * activity_multipliers.get(activity_level.lower(), 1.2)
+
+def get_nutrition_recommendations(caloric_intake):
+    """Provide basic nutritional recommendations based on caloric intake."""
+    return {
+        'Proteins': f'{0.15 * caloric_intake / 4:.0f} grams',
+        'Carbohydrates': f'{0.55 * caloric_intake / 4:.0f} grams',
+        'Fats': f'{0.30 * caloric_intake / 9:.0f} grams',
+        'Calcium': '1300 mg (recommended)',
+        'Iron': '15 mg (recommended)',
+        'Vitamin D': '600 IU (recommended)',
+        'Vitamin A': '700 mcg (recommended)',
+    }
+
+def main():
+    print("Nutritional Value Tracker for Teenage Girls")
+    
+    # Get user input
+    age = int(input("Enter your age (years): "))
+    weight = float(input("Enter your weight (kg): "))
+    height = float(input("Enter your height (m): "))
+    activity_level = input("Enter your activity level (sedentary, light, moderate, active, very active): ")
+
+    # Calculate BMI
+    bmi = calculate_bmi(weight, height)
+    print(f"Your BMI is: {bmi:.2f}")
+
+    # Calculate daily caloric needs
+    caloric_needs = calculate_caloric_needs(age, weight, height, activity_level)
+    print(f"Your daily caloric needs are: {caloric_needs:.0f} calories")
+
+    # Get nutritional recommendations
+    recommendations = get_nutrition_recommendations(caloric_needs)
+    print("Nutritional Recommendations:")
+    for nutrient, amount in recommendations.items():
+        print(f"{nutrient}: {amount}")
+
+if __name__ == "__main__":
+    main()
